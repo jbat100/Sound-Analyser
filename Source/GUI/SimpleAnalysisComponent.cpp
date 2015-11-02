@@ -28,9 +28,7 @@
 SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : analysisTree(analysisTree_)
 {
 
-    setSize (580, 30);
-    
-    
+    setSize (1000, 30);
     
     String name = analysisTree[AnalysisProperties::name];
     analysisName.setText(name, dontSendNotification);
@@ -52,6 +50,31 @@ SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : ana
     removeButton.setButtonText("x");
     addAndMakeVisible(&removeButton);
     
+    descriptorText.setText("Descriptor", dontSendNotification);
+    addAndMakeVisible(&descriptorText);
+    
+    descriptor.setColour(Label::textColourId, Colours::black);
+    descriptor.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    descriptor.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    descriptor.setText("default", dontSendNotification);
+    descriptor.setEditable(true);
+    addAndMakeVisible(&descriptor);
+    
+    descriptor.addListener(this);
+    
+    groupText.setText("Group", dontSendNotification);
+    addAndMakeVisible(&groupText);
+    
+    group.setColour(Label::textColourId, Colours::black);
+    group.setColour(Label::ColourIds::backgroundColourId, Colours::white);
+    group.setColour(Label::ColourIds::outlineColourId, Colours::lightgrey);
+    group.setText("default", dontSendNotification);
+    group.setEditable(true);
+    addAndMakeVisible(&group);
+    
+    group.addListener(this);
+    
+    descriptor.addListener(this);
     analysisTree.addListener(this);
     sendButton.addListener(this);
     plotButton.addListener(this);
@@ -60,18 +83,21 @@ SimpleAnalysisComponent::SimpleAnalysisComponent(ValueTree& analysisTree_) : ana
     refreshFromTree();
 }
 
-//==============================================================================
+
 void SimpleAnalysisComponent::refreshFromTree()
 {
-    sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+    sendButton.setToggleState(analysisTree[AnalysisProperties::send], dontSendNotification);
     plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
+    
+    group.setText(analysisTree[AnalysisProperties::group], dontSendNotification);
+    descriptor.setText(analysisTree[AnalysisProperties::descriptor], dontSendNotification);
     
     customComponentRefreshFromTree();
     
     resized();
 }
 
-//==============================================================================
+
 void SimpleAnalysisComponent::resized()
 {
     removeButton.setBounds(0,0,20,20);
@@ -79,24 +105,30 @@ void SimpleAnalysisComponent::resized()
     
     sendButton.setBounds(280,0,40,20);
     plotButton.setBounds(340, 0, 40, 20);
+    
+    descriptorText.setBounds(400,0,70,20);
+    descriptor.setBounds(480,00,100,20);
+    
+    groupText.setBounds(600,0,70,20);
+    group.setBounds(680,00,100,20);
 
     customComponentResized();
 }
 
 
-//==============================================================================
+
 void SimpleAnalysisComponent::paint(Graphics& g)
 {
    // g.fillAll(Colours::silver);
 }
 
 //==============================================================================
+
 void SimpleAnalysisComponent::buttonClicked (Button* button)
 {
     if (button == &sendButton)
     {
         bool state = sendButton.getToggleState();
-        
         if (state == true)
         {
             analysisTree.setProperty(AnalysisProperties::send, 0, nullptr);
@@ -109,7 +141,6 @@ void SimpleAnalysisComponent::buttonClicked (Button* button)
     else if (button == &plotButton)
     {
         bool state = plotButton.getToggleState();
-        
         if (state == true)
         {
             analysisTree.setProperty(AnalysisProperties::plot, 0, nullptr);
@@ -126,6 +157,25 @@ void SimpleAnalysisComponent::buttonClicked (Button* button)
     }
 }
 
+
+//==============================================================================
+
+void SimpleAnalysisComponent::labelTextChanged (Label* labelThatHasChanged)
+{
+    if (labelThatHasChanged == &descriptor)
+    {
+        String descriptorValue = descriptor.getTextValue().toString();
+        analysisTree.setProperty(AnalysisProperties::descriptor, descriptorValue, nullptr);
+        //refreshFromTree();
+    }
+    else if (labelThatHasChanged == &group)
+    {
+        String groupValue = group.getTextValue().toString();
+        analysisTree.setProperty(AnalysisProperties::group, groupValue, nullptr);
+        //refreshFromTree();
+    }
+}
+
 //==============================================================================
 void SimpleAnalysisComponent::valueTreePropertyChanged (ValueTree& treeWhosePropertyHasChanged, const Identifier& property)
 {
@@ -133,16 +183,21 @@ void SimpleAnalysisComponent::valueTreePropertyChanged (ValueTree& treeWhoseProp
     {
         if (property == AnalysisProperties::send)
         {
-            sendButton.setToggleState(analysisTree[AnalysisProperties::send],dontSendNotification);
+            sendButton.setToggleState(analysisTree[AnalysisProperties::send], dontSendNotification);
         }
         else if (property == AnalysisProperties::plot)
         {
             plotButton.setToggleState(analysisTree[AnalysisProperties::plot], dontSendNotification);
         }
-        
+        else if (property == AnalysisProperties::group)
+        {
+            group.setText(analysisTree[AnalysisProperties::group], dontSendNotification);
+        }
+        else if (property == AnalysisProperties::descriptor)
+        {
+            descriptor.setText(analysisTree[AnalysisProperties::descriptor], dontSendNotification);
+        }
         customComponentPropertyChange(treeWhosePropertyHasChanged,property);
-        
-        
         resized();
     }
 }
@@ -153,13 +208,13 @@ void SimpleAnalysisComponent::valueTreeChildAdded (ValueTree& parentTree, ValueT
 }
 
 //==============================================================================
-void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
+void SimpleAnalysisComponent::valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved)
 {
 
 }
 
 //==============================================================================
-void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
+void SimpleAnalysisComponent::valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex)
 {
 
 }

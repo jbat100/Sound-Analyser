@@ -69,6 +69,8 @@ public:
      */
     void setAnalyserIdString(std::string analyserId);
     
+    void rebuildOSCPaths(void);
+    
     /** Set the audio buffer size to be used for audio analysis. Note that this is
      * not (necessarily) the host audio frame size as the AudioAnalysisManager will 
      * use an AudioBuffer object to manage audio buffer sizes
@@ -98,6 +100,8 @@ public:
     
     /** Resets the plotHistory to zeros */
     void clearPlotHistory();
+    
+    std::string getAnalyserId() {return analyserId;}
     
     /** An array of AudioAnalysis objects */
     OwnedArray<AudioAnalysis> audioAnalyses;
@@ -138,6 +142,8 @@ private:
     
     /** An instance of the gist audio analysis library */
     Gist<float> gist;
+    
+    std::string analyserId;
     
     //=======================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioAnalysisManager)

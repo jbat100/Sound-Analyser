@@ -23,11 +23,12 @@
 
 #include "Osc.h"
 
+#define LOCAL_PORT 0
 
 //==============================================================================
 Osc::Osc()
 {
-    datagramSocket = new DatagramSocket (7500, false);
+    datagramSocket = new DatagramSocket (false);
     
     currentIP = ADDRESS;
     currentPort = PORT;
@@ -69,7 +70,7 @@ void Osc::sendMessage(std::string address,float value)
     address += a[1];
     address += a[0];
     
-    datagramSocket->write(address.c_str(), address.size());
+    datagramSocket->write(currentIP, currentPort, address.c_str(), address.size());
 }
 
 //==============================================================================
@@ -107,13 +108,14 @@ void Osc::sendMessage(std::string address,std::vector<float> values)
         address += a[0];
     }
     
-    datagramSocket->write(address.c_str(), address.size());
+    datagramSocket->write(currentIP, currentPort, address.c_str(), address.size());
 }
 
 //==============================================================================
 void Osc::connect()
 {
-    
+    /*
+     
     if(datagramSocket->connect (currentIP.c_str(), currentPort))
     {
         // THEN WE CONNECTED SUCCESSFULLY
@@ -122,15 +124,24 @@ void Osc::connect()
     {
         DBG("ERROR CONNECTING");
     }
+     
+     */
+    
+    datagramSocket->bindToPort(LOCAL_PORT);
+    
 }
 
 //==============================================================================
 void Osc::disconnect()
 {
+    /*
+     
     if (datagramSocket != nullptr && datagramSocket->isConnected())
     {
         datagramSocket->close();
     }
+     
+     */
 }
 
 //==============================================================================

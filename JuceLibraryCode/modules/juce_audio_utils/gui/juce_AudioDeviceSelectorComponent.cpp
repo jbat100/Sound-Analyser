@@ -2,7 +2,7 @@
   ==============================================================================
 
    This file is part of the JUCE library.
-   Copyright (c) 2013 - Raw Material Software Ltd.
+   Copyright (c) 2015 - ROLI Ltd.
 
    Permission is granted to use this software under the terms of either:
    a) the GPL v2 (or any later version)
@@ -291,25 +291,31 @@ public:
                 r.removeFromTop (space);
             }
 
-            r.removeFromTop (space * 2);
-            Rectangle<int> buttons (r.removeFromTop (h));
+            r.removeFromTop (space);
 
-            if (showUIButton != nullptr)
+            if (showUIButton != nullptr || resetDeviceButton != nullptr)
             {
-                showUIButton->setVisible (advancedSettingsVisible);
-                showUIButton->changeWidthToFitText (h);
-                showUIButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
-                buttons.removeFromLeft (space);
+                Rectangle<int> buttons (r.removeFromTop (h));
+
+                if (showUIButton != nullptr)
+                {
+                    showUIButton->setVisible (advancedSettingsVisible);
+                    showUIButton->changeWidthToFitText (h);
+                    showUIButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
+                    buttons.removeFromLeft (space);
+                }
+
+                if (resetDeviceButton != nullptr)
+                {
+                    resetDeviceButton->setVisible (advancedSettingsVisible);
+                    resetDeviceButton->changeWidthToFitText (h);
+                    resetDeviceButton->setBounds (buttons.removeFromLeft (resetDeviceButton->getWidth()));
+                }
+
+                r.removeFromTop (space);
             }
 
-            if (resetDeviceButton != nullptr)
-            {
-                resetDeviceButton->setVisible (advancedSettingsVisible);
-                resetDeviceButton->changeWidthToFitText (h);
-                resetDeviceButton->setBounds (buttons.removeFromLeft (showUIButton->getWidth()));
-            }
-
-            setSize (getWidth(), r.getHeight());
+            setSize (getWidth(), r.getY());
         }
         else
         {
@@ -488,6 +494,7 @@ public:
                 inputDeviceDropDown->setSelectedId (-1, dontSendNotification);
         }
 
+        sendLookAndFeelChange();
         resized();
         setSize (getWidth(), getLowestY() + 4);
     }
@@ -1080,7 +1087,7 @@ void AudioDeviceSelectorComponent::comboBoxChanged (ComboBox* comboBoxThatHasCha
 
             deviceManager.setCurrentAudioDeviceType (type->getTypeName(), true);
 
-            updateAllControls(); // needed in case the type hasn't actally changed
+            updateAllControls(); // needed in case the type hasn't actually changed
         }
     }
     else if (comboBoxThatHasChanged == midiOutputSelector)

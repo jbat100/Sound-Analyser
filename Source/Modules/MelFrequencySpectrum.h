@@ -71,8 +71,7 @@ public:
     /** overriding initialise here as we have extra fields! */
     void initialise(ValueTree &analysisTree)
     {
-        send = analysisTree[AnalysisProperties::send];
-        plot = analysisTree[AnalysisProperties::plot];
+        AudioAnalysis::initialise(analysisTree);
         
         // this property is unique to Mel Frequency Spectrum
         numBins = analysisTree[AnalysisProperties::MelFrequencySpectrum::numBins];
@@ -97,11 +96,7 @@ public:
     /** overriding this as we have custom parameters */
     virtual ValueTree createAnalysisTree()
     {
-        ValueTree tree(getIdentifier());
-        
-        tree.setProperty(AnalysisProperties::send, 0, nullptr);
-        tree.setProperty(AnalysisProperties::plot, 0, nullptr);
-        tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+        ValueTree tree = AudioAnalysis::createAnalysisTree();
         
         // extra properties for Mel Frequency Spectrum
         tree.setProperty(AnalysisProperties::MelFrequencySpectrum::numBins, 13, nullptr);

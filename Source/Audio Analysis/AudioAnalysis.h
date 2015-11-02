@@ -62,6 +62,8 @@ public:
     {
         plot = false;
         send = false;
+        group = "default";
+        descriptor = "default";
         addressPattern = "/uninitialised";
     }
     
@@ -193,6 +195,8 @@ public:
         tree.setProperty(AnalysisProperties::send, 0, nullptr);
         tree.setProperty(AnalysisProperties::plot, 0, nullptr);
         tree.setProperty(AnalysisProperties::name, getName(), nullptr);
+        tree.setProperty(AnalysisProperties::group, String("default"), nullptr);
+        tree.setProperty(AnalysisProperties::descriptor, String("default"), nullptr);
         
         return tree;
     }
@@ -209,6 +213,8 @@ public:
     {        
         send = analysisTree[AnalysisProperties::send];
         plot = analysisTree[AnalysisProperties::plot];
+        group = analysisTree[AnalysisProperties::group];
+        descriptor = analysisTree[AnalysisProperties::descriptor];
     }
     
     /** If your module has custom properties, override this function to deal with any changes
@@ -238,9 +244,9 @@ public:
     /** Constructs the full OSC address pattern from the analyser ID and the module address pattern
      * @param idWithForwardSlash the identifier of the analyser, with a leading forward slash
      */
-    void buildAddressPatternFromId(std::string idWithForwardSlash)
+    void buildAddressPatternFromId(std::string analyserId)
     {
-        addressPattern = idWithForwardSlash.append(getCoreAddressPattern());
+        addressPattern = std::string("/").append(analyserId).append("/").append(group.toStdString()).append("/").append(descriptor.toStdString()).append(getCoreAddressPattern());
     }
     
     /** Indicates whether the module should update the plotting vectors */
@@ -248,6 +254,10 @@ public:
     
     /** Indicates whether the module should send its result by OSC */
     bool send;
+    
+    String group;
+    
+    String descriptor;
     
     /** The address pattern of the audio analysis module */
     std::string addressPattern;

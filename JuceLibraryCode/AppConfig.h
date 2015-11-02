@@ -39,6 +39,11 @@
 #define JUCE_MODULE_AVAILABLE_juce_video                    1
 
 //==============================================================================
+#ifndef    JUCE_STANDALONE_APPLICATION
+ #define   JUCE_STANDALONE_APPLICATION 0
+#endif
+
+//==============================================================================
 // juce_audio_devices flags:
 
 #ifndef    JUCE_ASIO
@@ -47,6 +52,10 @@
 
 #ifndef    JUCE_WASAPI
  //#define JUCE_WASAPI
+#endif
+
+#ifndef    JUCE_WASAPI_EXCLUSIVE
+ //#define JUCE_WASAPI_EXCLUSIVE
 #endif
 
 #ifndef    JUCE_DIRECTSOUND
@@ -134,6 +143,10 @@
  //#define JUCE_INCLUDE_ZLIB_CODE
 #endif
 
+#ifndef    JUCE_USE_CURL
+ //#define JUCE_USE_CURL
+#endif
+
 //==============================================================================
 // juce_graphics flags:
 
@@ -214,25 +227,25 @@
  #define JucePlugin_Build_AAX              0
 #endif
 #ifndef  JucePlugin_Name
- #define JucePlugin_Name                   "Sound Analyser"
+ #define JucePlugin_Name                   "SOWIZ Analyser"
 #endif
 #ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "Sound Analyser"
+ #define JucePlugin_Desc                   "SOWIZ Analyser"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "Adam Stark"
+ #define JucePlugin_Manufacturer           "SOWIZ"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
- #define JucePlugin_ManufacturerWebsite    "http://www.adamstark.co.uk"
+ #define JucePlugin_ManufacturerWebsite    ""
 #endif
 #ifndef  JucePlugin_ManufacturerEmail
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       'Asta'
+ #define JucePlugin_ManufacturerCode       'Sowz'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             'Snda'
+ #define JucePlugin_PluginCode             'Anls'
 #endif
 #ifndef  JucePlugin_MaxNumInputChannels
  #define JucePlugin_MaxNumInputChannels    2
@@ -289,7 +302,7 @@
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
- #define JucePlugin_CFBundleIdentifier     com.adamstark.SoundAnalyser
+ #define JucePlugin_CFBundleIdentifier     com.sowiz.analyser
 #endif
 #ifndef  JucePlugin_RTASCategory
  #define JucePlugin_RTASCategory           ePlugInCategory_None
@@ -307,7 +320,7 @@
  #define JucePlugin_RTASDisableMultiMono   0
 #endif
 #ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.adamstark.SoundAnalyser
+ #define JucePlugin_AAXIdentifier          com.sowiz.analyser
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode

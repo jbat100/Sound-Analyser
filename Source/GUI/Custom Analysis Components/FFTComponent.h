@@ -28,7 +28,7 @@
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
 
-class FFTComponent : public SimpleAnalysisComponent, public Label::Listener {
+class FFTComponent : public SimpleAnalysisComponent {
     
 public:
     FFTComponent(ValueTree& analysisTree_);

@@ -107,6 +107,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                         
                         if (audioAnalyses[i]->send)
                         {
+                            //audioAnalyses[i]->buildAddressPatternFromId(analyserId);
                             osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
                         }
                         
@@ -142,6 +143,7 @@ void AudioAnalysisManager::analyseAudio(float* buffer,int numSamples)
                         
                         if (audioAnalyses[i]->send)
                         {
+                            //audioAnalyses[i]->buildAddressPatternFromId(analyserId);
                             osc.sendMessage(audioAnalyses[i]->addressPattern.c_str(), output);
                         }
 
@@ -185,15 +187,17 @@ void AudioAnalysisManager::clearPlotHistory()
 }
 
 //==============================================================================
-void AudioAnalysisManager::setAnalyserIdString(std::string analyserId)
+void AudioAnalysisManager::setAnalyserIdString(std::string newId)
 {
-    std::string idWithSlash("/");
-    
-    idWithSlash = idWithSlash.append(analyserId);
-    
+    analyserId = newId;
+    rebuildOSCPaths();
+}
+
+void AudioAnalysisManager::rebuildOSCPaths(void)
+{
     for (int i = 0;i < audioAnalyses.size();i++)
     {
-        audioAnalyses[i]->buildAddressPatternFromId(idWithSlash);
+        audioAnalyses[i]->buildAddressPatternFromId(analyserId);
     }
 }
 
