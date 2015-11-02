@@ -303,49 +303,50 @@ void SoundAnalyserAudioProcessor::valueTreePropertyChanged (ValueTree& treeWhose
     }
     else
     {
-        // send state changes
-        if (property == AnalysisProperties::send)
+        AudioAnalysis* analysis = nullptr;
+        for (int i = 0;i < analyser.audioAnalyses.size();i++)
         {
-            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
             {
-                 if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
-                 {
-                     analyser.audioAnalyses[i]->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
-                 }
+                analysis = analyser.audioAnalyses[i];
+                break;
             }
         }
-        // plot state changes
-        else if (property == AnalysisProperties::plot)
-        {
-            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+        
+        if (analysis) {
+         
+            if (property == AnalysisProperties::send)
             {
-                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
+                analysis->send = treeWhosePropertyHasChanged[AnalysisProperties::send];
+            }
+            else if (property == AnalysisProperties::plot)
+            {
+                analysis->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
+                if (analysis->plot)
                 {
-                    analyser.audioAnalyses[i]->plot = treeWhosePropertyHasChanged[AnalysisProperties::plot];
-                    
-                    if (analyser.audioAnalyses[i]->plot)
-                    {
-                        analyser.currentAnalysisToPlotType = analyser.audioAnalyses[i]->getOutputType();
-                    }
+                    analyser.currentAnalysisToPlotType = analysis->getOutputType();
                 }
+                analyser.clearPlotHistory();
+            }
+            else if (property == AnalysisProperties::descriptor)
+            {
+                analysis->descriptor = treeWhosePropertyHasChanged[AnalysisProperties::descriptor];
+                analysis->buildAddressPatternFromId(analyser.getAnalyserId());
             }
             
-            // clear the plot history 
-            analyser.clearPlotHistory();
-        }
-        else // deal with custom properties here
-        {
-            for (int i = 0;i < analyser.audioAnalyses.size();i++)
+            else if (property == AnalysisProperties::group)
             {
-                if (treeWhosePropertyHasChanged.getType() == analyser.audioAnalyses[i]->getIdentifier())
-                {
-                    analyser.audioAnalyses[i]->handleCustomPropertyChange(treeWhosePropertyHasChanged, property);
-                }
+                analysis->group = treeWhosePropertyHasChanged[AnalysisProperties::group];
+                analysis->buildAddressPatternFromId(analyser.getAnalyserId());
             }
-                
+            
+            // deal with custom properties here
+            else
+            {
+                analysis->handleCustomPropertyChange(treeWhosePropertyHasChanged, property);
+            }
+            
         }
-        
-        
     }
 }
 

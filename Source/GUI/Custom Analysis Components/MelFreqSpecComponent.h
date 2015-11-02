@@ -28,7 +28,7 @@
 #include "../../Audio Analysis/AnalysisModel.h"
 #include "../SimpleAnalysisComponent.h"
 
-class MelFreqSpecComponent : public SimpleAnalysisComponent, public Label::Listener {
+class MelFreqSpecComponent : public SimpleAnalysisComponent {
     
 public:
     MelFreqSpecComponent(ValueTree& analysisTree_);

@@ -1,3 +1,5 @@
 Builds/MacOSX/Build
 *.xcuserstate
 OldAnalyser
+Source/JuceLibraryCode
+

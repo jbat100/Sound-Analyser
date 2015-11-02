@@ -26,7 +26,7 @@
 //==============================================================================
 MelFreqSpecComponent::MelFreqSpecComponent(ValueTree& analysisTree_) : SimpleAnalysisComponent(analysisTree_)
 {
-    setSize (580, 30);
+    setSize (1000, 30);
    
     numMelBinsText.setText("# Bins", dontSendNotification);
     addAndMakeVisible(&numMelBinsText);
@@ -57,8 +57,8 @@ void MelFreqSpecComponent::customComponentPropertyChange(ValueTree& treeWhosePro
 //==============================================================================
 void MelFreqSpecComponent::customComponentResized()
 {
-    numMelBinsText.setBounds(400, 0, 70, 20);
-    numMelBins.setBounds(480,00,40,20);
+    numMelBinsText.setBounds(800, 0, 70, 20);
+    numMelBins.setBounds(880,00,40,20);
 }
 
 //==============================================================================
@@ -74,8 +74,11 @@ void MelFreqSpecComponent::labelTextChanged (Label* labelThatHasChanged)
     if (labelThatHasChanged == &numMelBins)
     {
         int numBins = numMelBins.getTextValue().getValue();
-        
         analysisTree.setProperty(AnalysisProperties::MelFrequencySpectrum::numBins, numBins, nullptr);
+    }
+    else
+    {
+        SimpleAnalysisComponent::labelTextChanged(labelThatHasChanged);
     }
 }
 

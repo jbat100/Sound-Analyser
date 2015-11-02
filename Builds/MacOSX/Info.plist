@@ -8,9 +8,9 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.adamstark.SoundAnalyser</string>
+    <string>com.sowiz.analyser</string>
     <key>CFBundleName</key>
-    <string>Sound Analyser</string>
+    <string>SOWIZ Analyser</string>
     <key>CFBundlePackageType</key>
     <string>TDMw</string>
     <key>CFBundleSignature</key>
@@ -20,24 +20,24 @@
     <key>CFBundleVersion</key>
     <string>1.0.1</string>
     <key>NSHumanReadableCopyright</key>
-    <string>Adam Stark</string>
+    <string>SOWIZ</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>AudioComponents</key>
     <array>
       <dict>
         <key>name</key>
-        <string>Adam Stark: Sound Analyser</string>
+        <string>SOWIZ: SOWIZ Analyser</string>
         <key>description</key>
-        <string>Sound Analyser</string>
+        <string>SOWIZ Analyser</string>
         <key>factoryFunction</key>
         <string>SoundAnalyserAUFactory</string>
         <key>manufacturer</key>
-        <string>Asta</string>
+        <string>Sowz</string>
         <key>type</key>
         <string>aufx</string>
         <key>subtype</key>
-        <string>Snda</string>
+        <string>Anls</string>
         <key>version</key>
         <integer>65537</integer>
       </dict>

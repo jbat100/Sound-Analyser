@@ -26,7 +26,7 @@
 //==============================================================================
 FFTComponent::FFTComponent(ValueTree& analysisTree_) : SimpleAnalysisComponent(analysisTree_)
 {
-    setSize (580, 30);
+    setSize (1000, 30);
     
     numFFTSamplesText.setText("# Samples", dontSendNotification);
     addAndMakeVisible(&numFFTSamplesText);
@@ -56,8 +56,8 @@ void FFTComponent::customComponentPropertyChange(ValueTree& treeWhosePropertyHas
 //==============================================================================
 void FFTComponent::customComponentResized()
 {
-    numFFTSamplesText.setBounds(400, 0, 70, 20);
-    numFFTSamples.setBounds(480,00,40,20);
+    numFFTSamplesText.setBounds(800, 0, 70, 20);
+    numFFTSamples.setBounds(880,00,40,20);
 }
 
 //==============================================================================
@@ -73,16 +73,16 @@ void FFTComponent::labelTextChanged (Label* labelThatHasChanged)
     if (labelThatHasChanged == &numFFTSamples)
     {
         int numSamples = numFFTSamples.getTextValue().getValue();
-        
         ValueTree analyserTree = analysisTree.getParent();
-        
         int bufferSize = analyserTree[AnalysisModel::Ids::BufferSize];
-        
         if (numSamples > bufferSize/2)
         {
             numSamples = bufferSize/2;
         }
-        
         analysisTree.setProperty(AnalysisProperties::FFT::numSamplesToSend, numSamples, nullptr);
+    }
+    else
+    {
+        SimpleAnalysisComponent::labelTextChanged(labelThatHasChanged);
     }
 }

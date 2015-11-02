@@ -31,7 +31,7 @@ SoundAnalyserAudioProcessorEditor::SoundAnalyserAudioProcessorEditor (SoundAnaly
     : AudioProcessorEditor (ownerFilter), analyserTree(analyserTree_)
 {
     // This is where our plugin's editor size is set.
-    setSize (600, 500);
+    setSize (1000, 500);
     
     LookAndFeel::setDefaultLookAndFeel(&pluginLookAndFeel);
     
@@ -272,34 +272,29 @@ void SoundAnalyserAudioProcessorEditor::resized()
 {
     bufferSizeText.setBounds(10, 10, 70, 20);
    // bufferSizeValue.setBounds(90,10,40,20);
-    bufferSizeComboBox.setBounds(80, 10, 60, 20);
+    bufferSizeComboBox.setBounds(90, 10, 60, 20);
     
     int lastComponentY = 0;
     
     for (int i = 0;i < analysisComponents.size();i++)
     {
         analysisComponents[i]->setBounds(10,(plotY+plotHeight+25)+lastComponentY,analysisComponents[i]->getWidth(),analysisComponents[i]->getHeight());
-        
         lastComponentY += analysisComponents[i]->getHeight();
     }
     
     newAnalysisButton.setBounds(10, getHeight()-60, 50, 50);
     
+    IPAddressText.setBounds(160, 10, 80, 20);
+    IPAddressValue.setBounds(250, 10, 90, 20);
     
-
+    OSCPortText.setBounds(350, 10, 40, 20);
+    OSCPort.setBounds(400, 10, 40, 20);
     
-    IPAddressText.setBounds(getWidth()-450, 10, 80, 20);
-    IPAddressValue.setBounds(getWidth()-360, 10, 90, 20);
-    
-    OSCPortText.setBounds(getWidth()-260, 10, 40, 20);
-    OSCPort.setBounds(getWidth()-210, 10, 40, 20);
-    
-    analyserIdText.setBounds(getWidth()-170, 10, 80, 20);
-    analyserId.setBounds(getWidth()-80, 10, 70, 20);
+    analyserIdText.setBounds(450, 10, 80, 20);
+    analyserId.setBounds(540, 10, 70, 20);
     
     float titleWidth = 280;
     pluginTitleLabel.setBounds(getWidth()-titleWidth-10, getHeight()-60, titleWidth, 50);
-    
     pluginVersionLabel.setBounds(getWidth()-50, getHeight()-15, 40, 10);
 }
 

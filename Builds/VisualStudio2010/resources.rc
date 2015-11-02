@@ -13,10 +13,10 @@ BEGIN
   BEGIN
     BLOCK "040904E4"
     BEGIN
-      VALUE "CompanyName",  "Adam Stark\0"
-      VALUE "FileDescription",  "Sound Analyser\0"
+      VALUE "CompanyName",  "SOWIZ\0"
+      VALUE "FileDescription",  "SOWIZ Analyser\0"
       VALUE "FileVersion",  "1.0.1\0"
-      VALUE "ProductName",  "Sound Analyser\0"
+      VALUE "ProductName",  "SOWIZ Analyser\0"
       VALUE "ProductVersion",  "1.0.1\0"
     END
   END

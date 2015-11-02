@@ -35,6 +35,8 @@ struct AnalysisProperties
     static const Identifier send;               /**< The 'send' identifier */
     static const Identifier plot;               /**< The 'plot' identifier */
     static const Identifier name;               /**  The audio analysis name identifier */
+    static const Identifier group;              /**  The group (can be used to assign to visualisation object groups) */
+    static const Identifier descriptor;         /**  The descriptor (can be used to assign to visualisation descriptors, like darkness, sharpness etc) */
     
     struct FFT {
         static const Identifier numSamplesToSend;

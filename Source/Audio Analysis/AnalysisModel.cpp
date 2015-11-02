@@ -34,6 +34,8 @@ const Identifier AnalysisModel::Ids::IPAddress("IPAddress");
 const Identifier AnalysisProperties::send("Send");
 const Identifier AnalysisProperties::plot("Plot");
 const Identifier AnalysisProperties::name("Name");
+const Identifier AnalysisProperties::group("Group");
+const Identifier AnalysisProperties::descriptor("Descriptor");
 const Identifier AnalysisProperties::FFT::numSamplesToSend("NumSamplesToSend");
 const Identifier AnalysisProperties::MelFrequencySpectrum::numBins("NumBins");
 

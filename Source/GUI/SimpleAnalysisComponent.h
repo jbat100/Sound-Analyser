@@ -33,7 +33,7 @@
     Extend this class to create a custom component. 
  
 */
-class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener {
+class SimpleAnalysisComponent : public Component, public Button::Listener, public ValueTree::Listener, public Label::Listener {
     
 public:
     SimpleAnalysisComponent(ValueTree& analysisTree_);
@@ -58,6 +58,9 @@ public:
     void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved, int indexFromWhichChildWasRemoved);
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved, int oldIndex, int newIndex);
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged);
+    
+    //==============================================================================
+    void labelTextChanged (Label* labelThatHasChanged);
    
     //======================================================================
     virtual void customComponentPropertyChange(ValueTree& treeWhosePropertyHasChanged, const Identifier& property);
@@ -73,8 +76,11 @@ private:
     Label analysisName;
     TextButton sendButton;
     TextButton plotButton;
-    
     TextButton removeButton;
+    Label descriptorText;
+    Label descriptor;
+    Label groupText;
+    Label group;
     
     //======================================================================//
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleAnalysisComponent)
