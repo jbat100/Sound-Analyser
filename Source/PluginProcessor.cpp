@@ -28,10 +28,7 @@
 //==============================================================================
 SoundAnalyserAudioProcessor::SoundAnalyserAudioProcessor() : analyserTree( AnalysisModel::createAnalyserTree()), analyser(analyserTree[AnalysisModel::Ids::BufferSize])
 {
-    
-    
     analyserTree.addListener(this);
-    
     refreshFromTree();
 }
 
@@ -44,18 +41,15 @@ SoundAnalyserAudioProcessor::~SoundAnalyserAudioProcessor()
 void SoundAnalyserAudioProcessor::refreshFromTree()
 {
     analyser.setBufferSize(analyserTree[AnalysisModel::Ids::BufferSize]);
-    
     analyser.setOSCPort(analyserTree[AnalysisModel::Ids::Port]);
-    
     analyser.setIPAddress(analyserTree[AnalysisModel::Ids::IPAddress].toString().toStdString());
-    
     analyser.setAnalyserIdString(analyserTree[AnalysisModel::Ids::AnalyserId].toString().toStdString());
     
     for (int i = 0;i < analyser.audioAnalyses.size();i++)
     {
         ValueTree tree = analyserTree.getChildWithName(analyser.audioAnalyses[i]->getIdentifier());
-        
         analyser.audioAnalyses[i]->initialise(tree);
+        analyser.audioAnalyses[i]->buildAddressPatternFromId(analyser.getAnalyserId());
     }
 }
 
